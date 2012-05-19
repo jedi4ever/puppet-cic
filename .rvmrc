@@ -1,0 +1,6 @@
+#this uses rvm
+rvm use 1.8.7
+rvm_gemset_create_on_use_flag=1
+rvm gemset use puppet-cic
+alias rake="bundle exec rake"
+alias puppet-cic="bundle exec bin/puppet-cic"
