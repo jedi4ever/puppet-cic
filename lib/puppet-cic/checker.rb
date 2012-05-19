@@ -38,7 +38,12 @@ module PuppetCic
 
     def check
 
-      facts = YAML::load(File.open(@factsfile))
+      begin
+        facts = YAML::load(File.open(@factsfile))
+      rescue Exception => ex
+        puts "Error opening factsfile '#{@factsfile}'\n=> #{ex}"
+        exit -1
+      end
 
       change_needed = false
 
