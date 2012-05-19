@@ -7,15 +7,18 @@ module PuppetCic
 
     include PuppetCic::Command
 
-    desc "check", "Check if a role specified by a yaml file is impacted"
+    desc "check", "Given facts specificied by factsfile (Yaml)\n"+
+      "check what puppet modules are impacted by a commit range"
+    method_option :modulepath , :default => "modules", :desc => "Path to the puppet modules"
+    method_option :manifestdir , :default => "manifests", :desc => "Path to puppet manifests"
+    method_option :manifest , :default => "manifests/site.pp", :desc => "Path to puppet manifest"
+
     method_option :repodir , :default => '.', :desc => "Directory where the repository is located"
-    method_option :repotype , :default => 'mercurial', :desc => "Type of repository (mercurial)"
-    method_option :role_file , :desc => "Yaml file that contains facts"
-    method_option :modulepath , :default => "modules", :desc => "Path to the modules"
-    method_option :manifestdir , :default => "manifests", :desc => "Path to manifests"
-    method_option :manifest , :default => "site.pp", :desc => "Path to manifest"
-    method_option :from, :desc => "From revision"
-    method_option :to, :desc => "Till Revision"
+    method_option :repotype , :default => 'mercurial', :desc => "Type of repository (mercurial or git)"
+    method_option :from, :desc => "From revision (defaults last commit -1 )"
+    method_option :to, :desc => "Till Revision (defaults last commit)"
+
+    method_option :factsfile , :required => true,:desc => "Yaml file that contains facts"
     def check
       _check(options)
     end
